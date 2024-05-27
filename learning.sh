@@ -3,13 +3,13 @@
 # 作用: 课程列表页的cookie
 # 链接: https://menhu.pt.ouchn.cn/site/ouchnPc/index
 # 格式: "Cookie: eai-sess=xxxxxxxxx; UUkey=xxxxxxxxxx"
-header_cookie_index="Cookie: eai-sess=AQIC5wM2LY4Sfcy-BX3j6oDYNS75AzvL5uZ2butf__88C38%2AAAJTSQACMDEAAlNLABM1MDQyNTA3MzAyMzA0NTcyMzQ2%2A; UUkey=f369d914bdd8f9f7dbda344c452edbc4"
+header_cookie_index="Cookie: "
 # header_cookie_index="Cookie: "
 
 # 作用: 具体课程的cookie
 # 链接: https://lms.ouchn.cn/course/xxxxxxxxxxx/ng#/
 # 格式: "Cookie: session=V2-60000000002-xxxxxxxx; HWWAFSESID=xxxxxx; HWWAFSESTIME=xxxxx"
-header_cookie="Cookie: session=V2-10-516c4847-33af-410e-982c-a00a499d9623.MTc4ODUzMw.1699501416384.5ZFBnGeDBiDWOrvZhZ2iu-1guNk; HWWAFSESID=73db31bad14a188f595; HWWAFSESTIME=1699237059166"
+header_cookie="Cookie: "
 # header_cookie="Cookie: "
  
 # 作用: 当请求过快而学习无效时的缓冲时间
@@ -308,11 +308,21 @@ function get_subject_list() {
     SUBJECT_ID=$(echo "$c" | jq ".d.list[$((seq - 1))].url" | awk -F "/" '{print($5)}')
 
 }
-main() {
+
+function main() {
     get_subject_list
     get_subject "$SUBJECT_ID"
     check_completeness "$SUBJECT_ID"
     study_recode "$SUBJECT_ID"
     get_modules "$SUBJECT_ID"
 }
-main
+
+function f(){
+    local c 
+    set -x
+    c=$(curl -s https://lms.ouchn.cn/api/exams/557894/makeup-exams -X 'POST' -H "$header_accept" -H "$header_accept_language" -H "$header_host" -H "$header_origin" -H "$header_cookie" -H "$header_user_agent" -H 'Referer: https://lms.ouchn.cn/course/557894/learning-activity/full-screen')
+    echo "$c" | jq ".message" -r
+    set +x
+}
+# main
+f

@@ -6,7 +6,7 @@
 
 > 1. Windows不支持使用，除非在windows安装bash/zsh的执行环境
 > 2. macOS/Linux需要安装curl和jq命令
-> 3. 对脚本使用用疑问，欢迎交流 微信号: SXL--LP
+> 3. 对脚本使用用疑问，欢迎交流，联系方式位于[个人首页](https://github.com/tengfei-xy)
 
 ## learning.sh - 学习脚本
 
